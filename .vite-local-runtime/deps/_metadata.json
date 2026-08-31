@@ -1,0 +1,56 @@
+{
+  "hash": "a7b35861",
+  "configHash": "f6817685",
+  "lockfileHash": "efa61e6c",
+  "browserHash": "6388129d",
+  "optimized": {
+    "next/font/google": {
+      "src": "../../../../2026-07-27/referenced-chatgpt-conversation-this-is-untrusted/work/duranki-banking-layer/node_modules/.pnpm/vinext@0.0.50_@vitejs+plugi_6e29d3c1e221dce46ffd79bec19b99c1/node_modules/vinext/dist/shims/font-google.js",
+      "file": "next_font_google.js",
+      "fileHash": "aea8413e",
+      "needsInterop": false
+    },
+    "react-dom": {
+      "src": "../../../../2026-07-27/referenced-chatgpt-conversation-this-is-untrusted/work/duranki-banking-layer/node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "fc646037",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../../../2026-07-27/referenced-chatgpt-conversation-this-is-untrusted/work/duranki-banking-layer/node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "e59b6b15",
+      "needsInterop": true
+    },
+    "react-server-dom-webpack/client.browser": {
+      "src": "../../../../2026-07-27/referenced-chatgpt-conversation-this-is-untrusted/work/duranki-banking-layer/node_modules/.pnpm/react-server-dom-webpack@19_64f5bb6b96dfe0203e7056961bf4f07c/node_modules/react-server-dom-webpack/client.browser.js",
+      "file": "react-server-dom-webpack_client__browser.js",
+      "fileHash": "7f32d718",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../../../2026-07-27/referenced-chatgpt-conversation-this-is-untrusted/work/duranki-banking-layer/node_modules/.pnpm/react@19.2.6/node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "a01433c1",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../../../2026-07-27/referenced-chatgpt-conversation-this-is-untrusted/work/duranki-banking-layer/node_modules/.pnpm/react@19.2.6/node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "f0bd7038",
+      "needsInterop": true
+    },
+    "react/jsx-runtime": {
+      "src": "../../../../2026-07-27/referenced-chatgpt-conversation-this-is-untrusted/work/duranki-banking-layer/node_modules/.pnpm/react@19.2.6/node_modules/react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "58ed8d0e",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "react-Bm_02kLh": {
+      "file": "react-Bm_02kLh.js",
+      "isDynamicEntry": false
+    }
+  }
+}

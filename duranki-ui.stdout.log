@@ -1,0 +1,8 @@
+
+> duranki-local-banking@0.1.0 start
+> vinext start --port 3002 --host 0.0.0.0
+
+
+  vinext start  (port 3002)
+
+[vinext] Production server running at http://0.0.0.0:3002

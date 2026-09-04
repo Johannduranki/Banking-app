@@ -7,11 +7,11 @@ const display = Manrope({ variable: "--font-display", subsets: ["latin"] });
 const body = DM_Sans({ variable: "--font-body", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Duranki — Banking, beautifully simple",
-  description: "A secure digital banking demo for everyday money, payments, cards and insights.",
-  icons: { icon: "/duranki-logo.png", shortcut: "/duranki-logo.png" },
-  openGraph: { title: "Duranki digital banking", description: "Your money, moving beautifully.", images: ["/og.png"] },
-  twitter: { card: "summary_large_image", title: "Duranki digital banking", description: "Your money, moving beautifully.", images: ["/og.png"] },
+  title: `${process.env.NEXT_PUBLIC_APP_BANK_NAME||"Great Lakes Bank"} — Digital Banking`,
+  description: `Secure ${process.env.NEXT_PUBLIC_APP_BANK_NAME||"Great Lakes Bank"} digital banking for accounts, payments, cards and insights.`,
+  icons: { icon: "/great-lakes-bank-logo.png", shortcut: "/great-lakes-bank-logo.png" },
+  openGraph: { title: "Great Lakes Bank digital banking", description: "Your bank. Your future. Connected.", images: ["/great-lakes-bank-logo.png"] },
+  twitter: { card: "summary", title: "Great Lakes Bank digital banking", description: "Your bank. Your future. Connected.", images: ["/great-lakes-bank-logo.png"] },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -22,5 +22,5 @@ createServer(async (req,res) => {
       : await worker.fetch(request, { ASSETS:{ fetch:assets } }, { waitUntil(){}, passThroughOnException(){} });
     res.writeHead(response.status, Object.fromEntries(response.headers));
     res.end(Buffer.from(await response.arrayBuffer()));
-  } catch (error) { console.error(error); res.writeHead(500); res.end("Duranki local service error"); }
-}).listen(3002, "127.0.0.1", () => console.log("Duranki ready at http://localhost:3002/"));
+  } catch (error) { console.error(error); res.writeHead(500); res.end("Great Lakes Bank local service error"); }
+}).listen(3002, "127.0.0.1", () => console.log("Great Lakes Bank ready at http://localhost:3002/"));

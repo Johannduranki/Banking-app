@@ -1,0 +1,17 @@
+export type KycStatus="NOT_STARTED"|"IN_PROGRESS"|"PENDING_REVIEW"|"APPROVED"|"REJECTED"|"MORE_INFORMATION_REQUIRED";
+export type KycLevel="LEVEL_0"|"LEVEL_1"|"LEVEL_2"|"LEVEL_3";
+export type RiskLevel="LOW"|"MEDIUM"|"HIGH";
+export type KycDocumentType="NATIONAL_ID"|"PASSPORT"|"ALTERNATIVE_ID"|"PROOF_OF_ADDRESS"|"SELFIE"|"TAX_DOCUMENT"|"SOURCE_OF_FUNDS"|"OTHER";
+export type KycEvidenceType="NATIONAL_ID_DOCUMENT"|"PASSPORT"|"ALTERNATIVE_IDENTITY_DOCUMENT"|"CUSTOMER_PERSONAL_INFORMATION"|"CUSTOMER_INFORMATION_VERIFIED"|"VERIFIED_MOBILE"|"SELFIE"|"FACIAL_BIOMETRIC"|"LIVENESS"|"FINGERPRINT"|"ADDRESS_EVIDENCE"|"BRANCH_ASSISTED_VERIFICATION"|"COMPLIANCE_OFFICER_VERIFICATION"|"ENHANCED_DUE_DILIGENCE";
+export type KycRequirementMode="REQUIRED"|"ONE_OF"|"OPTIONAL";
+export type KycDocumentVerificationStatus="NOT_VERIFIED"|"PENDING"|"VERIFIED"|"REJECTED"|"EXPIRED";
+export interface KycCase{id:string;customerId:string;status:KycStatus;kycLevel:KycLevel;riskLevel:RiskLevel;createdAt:string;submittedAt:string|null;reviewedAt:string|null;reviewedBy:string|null;reviewNotes:string|null;}
+export interface KycDocument{id:string;caseId:string;documentType:KycDocumentType;documentNumber:string|null;issuingCountry:string|null;issueDate:string|null;expiryDate:string|null;fileReference:string;storageProvider:string;contentType:string;fileSizeBytes:number;verificationStatus:KycDocumentVerificationStatus;createdAt:string;}
+export interface KycIdentityData{id:string;caseId:string;firstName:string;middleName:string|null;lastName:string;dateOfBirth:string|null;gender:string|null;nationality:string|null;identityType:"NATIONAL_ID"|"PASSPORT"|"OTHER";identityNumber:string|null;issuingCountry:string|null;}
+export interface KycVerification{id:string;caseId:string;verificationType:string;provider:string;providerReference:string|null;status:string;resultCode:string|null;score:number|null;requestedAt:string;completedAt:string|null;}
+export interface KycRiskAssessment{id:string;caseId:string;riskLevel:RiskLevel;riskScore:number|null;factors:unknown;assessmentModel:string|null;assessedBy:string|null;assessedAt:string;}
+export interface KycReview{id:string;caseId:string;reviewerId:string;decision:"APPROVED"|"REJECTED"|"MORE_INFORMATION_REQUIRED";reviewNotes:string|null;requestedInformation:string|null;reviewedAt:string;}
+export interface KycStatusHistory{id:number;caseId:string;fromStatus:KycStatus|null;toStatus:KycStatus;changedBy:string|null;changeReason:string|null;changeSource:string;metadata:unknown;createdAt:string;}
+export interface KycPolicyRequirement{id:string;evidenceType:KycEvidenceType;requirementMode:KycRequirementMode;groupCode:string|null;minimumCount:number;configuration:unknown;displayOrder:number;}
+export interface KycPolicyLevel{id:string;kycLevel:KycLevel;requiresManualApproval:boolean;description:string|null;requirements:KycPolicyRequirement[];}
+export interface KycPolicy{id:string;code:string;version:number;name:string;status:"DRAFT"|"ACTIVE"|"RETIRED";description:string|null;effectiveFrom:string|null;effectiveTo:string|null;levels:KycPolicyLevel[];}

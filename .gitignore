@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+/backends/api/node_modules/
+/backends/api/dist/
+/backends/api/storage/
 /.pnp
 .pnp.*
 .yarn/*
@@ -30,6 +33,8 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+!**/.env.example
 
 # vercel
 .vercel
@@ -40,3 +45,11 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+.runtime-backups/
+node_modules/
+*.log
+*.exe
+.~lock.*
+sop_render*/
+outputs/*_render*/

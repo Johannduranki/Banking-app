@@ -1,0 +1,86 @@
+services:
+  mariadb:
+    image: mariadb:11.8
+    environment:
+      MARIADB_DATABASE: duranki_banking
+      MARIADB_USER: duranki_app
+      MARIADB_PASSWORD: duranki-local-db-password
+      MARIADB_ROOT_PASSWORD: duranki-local-root-password
+    ports:
+      - "3306:3306"
+    volumes:
+      - duranki_mariadb:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: ./api
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      # Local HTTP development; production deployments must set NODE_ENV=production for Secure cookies.
+      NODE_ENV: development
+      APP_BANK_NAME: Great Lakes Bank
+      DEMO_MODE: "true"
+      PORT: 3000
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_NAME: duranki_banking
+      DB_USER: duranki_app
+      DB_PASSWORD: duranki-local-db-password
+      JWT_SECRET: duranki-local-demo-secret-change-before-production
+      ACCESS_TOKEN_SECRET: duranki-local-access-secret-change-before-production
+      ACCESS_TOKEN_TTL_MINUTES: 15
+      REFRESH_TOKEN_TTL_DAYS: 30
+      AUTH_MAX_FAILED_ATTEMPTS: 5
+      AUTH_LOCKOUT_MINUTES: 15
+      OTP_SECRET: duranki-local-otp-secret-change-before-production
+      OTP_TTL_MINUTES: 5
+      OTP_MAX_ATTEMPTS: 5
+      OTP_PROVIDER: mock
+      SMS_PROVIDER: mock
+      CORE_BANKING_PROVIDER: mock
+      FLEXCUBE_BASE_URL: ${FLEXCUBE_BASE_URL:-}
+      FLEXCUBE_USERNAME: ${FLEXCUBE_USERNAME:-}
+      FLEXCUBE_PASSWORD: ${FLEXCUBE_PASSWORD:-}
+      FLEXCUBE_BRANCH: ${FLEXCUBE_BRANCH:-}
+      FLEXCUBE_SOURCE: ${FLEXCUBE_SOURCE:-}
+      FLEXCUBE_TIMEOUT: ${FLEXCUBE_TIMEOUT:-15000}
+      FLEXCUBE_CONNECTION_MODE: ${FLEXCUBE_CONNECTION_MODE:-NOT_CONFIGURED}
+      FACE_PROVIDER: mock
+      LIVENESS_PROVIDER: mock
+      FINGERPRINT_PROVIDER: mock
+      KYC_MAKER_CHECKER_ENABLED: false
+      OBJECT_STORAGE_PROVIDER: local
+      LOCAL_OBJECT_STORAGE_PATH: /app/storage/kyc
+      PRESENTATION_CUSTOMER_EMAIL: aline.niyonkuru@glb.local
+      PRESENTATION_CUSTOMER_PASSWORD: GreatLakes!2026
+      ACTIVATION_TTL_MINUTES: 15
+      TRANSFER_MAX_AMOUNT_MINOR: 100000000
+      TRANSFER_DAILY_LIMIT_MINOR: 250000000
+      TRANSFER_STEP_UP_THRESHOLD_MINOR: 5000000
+      ADMIN_EMAIL: admin@greatlakesbank.test
+      ADMIN_PASSWORD: Admin123!
+      KYC_OFFICER_EMAIL: kyc.officer@greatlakesbank.test
+      KYC_OFFICER_PASSWORD: GreatLakesKyc!2026
+      OPERATIONS_USER_EMAIL: operations@greatlakesbank.test
+      OPERATIONS_USER_PASSWORD: GreatLakesOps!2026
+      FRONTEND_ORIGIN: http://localhost:3002
+    ports:
+      - "3001:3000"
+    volumes:
+      - kyc_local_storage:/app/storage/kyc
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  duranki_mariadb:
+  kyc_local_storage:

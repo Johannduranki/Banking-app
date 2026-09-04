@@ -1,0 +1,7 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {readFile} from "node:fs/promises";
+const read=path=>readFile(new URL(path,import.meta.url),"utf8");
+test("audit schema captures banking context and is database append-only",async()=>{const sql=await read("../../database/migrations/010_banking_audit_service.sql");for(const field of ["event_id","event_type","actor_role","customer_id","ip_address","device_id","correlation_id","result"])assert.match(sql,new RegExp(field));assert.match(sql,/BEFORE UPDATE/);assert.match(sql,/BEFORE DELETE/);assert.match(sql,/append-only/);});
+test("audit search is restricted and exposes no audit-record mutation route",async()=>{const source=await read("../src/modules/audit/index.ts");assert.match(source,/requireRoles\("AUDITOR","ADMIN"\)/);assert.doesNotMatch(source,/router\.(put|patch|delete)\("\/:eventId/);});
+test("security and banking workflows emit required event categories",async()=>{const files=await Promise.all([read("../src/modules/authentication/authentication.routes.ts"),read("../src/modules/customers/customer.routes.ts"),read("../src/modules/accounts/account.routes.ts"),read("../src/modules/transactions/transaction.routes.ts")]);const source=files.join("\n");for(const event of ["LOGIN_SUCCESS","LOGIN_FAILURE","OTP_REQUEST","OTP_VERIFICATION","CUSTOMER_INFORMATION_CHANGE","ACCOUNT_ACCESS","PAYMENT_INITIATION","PAYMENT_APPROVAL","TRANSFER"])assert.match(source,new RegExp(event));});
